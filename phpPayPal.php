@@ -884,7 +884,7 @@ class phpPayPal {
         )
     );
     
-    protected $_responeReference = '';
+    protected $_responseReference = '';
 
     // CONSTRUCT
     function __construct($config, $sandbox = false) {
@@ -1143,7 +1143,7 @@ class phpPayPal {
         $nvpstr = $this->generateNVPString('DoExpressCheckoutPayment');
 
         /* Construct and add any items found in this instance */
-        if ( !empty($this->ItemsArray) ) {
+        /*if ( !empty($this->ItemsArray) ) {
             // Counter for the total of all the items put together
             $total_items_amount = 0;
             // Go through the items array
@@ -1162,7 +1162,7 @@ class phpPayPal {
             // Set the amount_items for this instance and ITEMAMT added to the request string
             $this->amount_items = $total_items_amount;
             $nvpstr .= "&ITEMAMT=" . $total_items_amount;
-        }
+        }*/
 
         /* Make the call to PayPal to finalize payment
           If an error occured, show the resulting errors
@@ -1321,7 +1321,7 @@ class phpPayPal {
      */
     private function hash_call($methodName, $nvpStr) {
         
-        $this->_responeReference = $methodName;
+        $this->_responseReference = $methodName;
         
         // TODO: Add error handling for the hash_call
         //setting the curl parameters.
@@ -1650,7 +1650,7 @@ class phpPayPal {
          * ************
          */ elseif ( strtoupper($this->Response["ACK"]) == 'SUCCESS' OR strtoupper($this->Response["ACK"]) == 'SUCCESSWITHWARNING' ) {
             /* Take the response variables and put them into the local class variables */
-            foreach ($this->ResponseFieldsArray[$this->_responeReference] as $key => $value)
+            foreach ($this->ResponseFieldsArray[$this->_responseReference] as $key => $value)
                 $this->$key = $this->Response[$value];
 
             return true;
