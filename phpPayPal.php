@@ -529,7 +529,7 @@ class phpPayPal {
 				'shipping_phone_number' 	=> array('name' => 'SHIPTOPHONENUM',		'required' => 'no'),
 				 
 				'description' 				=> array('name' => 'DESC',					'required' => 'no'), // You must match the billing agreement var in set Express checkout
-				'currency'					=> array('name' => 'CURRENCYCODE',			'required' => 'no'),
+				'currency_code'				=> array('name' => 'CURRENCYCODE',			'required' => 'no'),
 				'payment_type' 				=> array('name' => 'PAYMENTACTION',			'required' => 'no'),
 				'billing_type' 				=> array('name' => 'L_BILLINGTYPE0',		'required' => 'no'),
 				'billing_agreement' 		=> array('name' => 'L_BILLINGAGREEMENTDESCRIPTION0', 'required' => 'no'),
@@ -926,7 +926,7 @@ class phpPayPal {
 				)
 		);
 	
-	
+	protected $_responseReference = '';
 	
 		
 	
@@ -934,11 +934,14 @@ class phpPayPal {
 	function __construct($config, $sandbox = false)
 	{
 		// Determine our API endpoint
-		if ($sandbox)
+		if ($sandbox){
 			$this->API_ENDPOINT = 'https://api-3t.sandbox.paypal.com/nvp';
-		else
+			$this->PAYPAL_URL = 'https://www.sandbox.paypal.com/webscr?cmd=_express-checkout&token=';
+		}
+		else{
 			$this->API_ENDPOINT = 'https://api-3t.paypal.com/nvp';
-		
+			$this->PAYPAL_URL = 'https://www.paypal.com/cgi-bin/webscr?cmd=_express-checkout&token=';
+		}
 		$this->API_USERNAME		= $config['api_username'];
 		$this->API_PASSWORD		= $config['api_password'];
 		$this->API_SIGNATURE	= $config['api_signature'];
@@ -1344,6 +1347,8 @@ class phpPayPal {
 	*/
 	private function hash_call($methodName, $nvpStr)
 	{
+		$this->_responseReference = $methodName;
+		
 		// TODO: Add error handling for the hash_call
 		
 		//setting the curl parameters.
@@ -1682,12 +1687,13 @@ class phpPayPal {
 		elseif(strtoupper($this->Response["ACK"]) == 'SUCCESS' OR strtoupper($this->Response["ACK"]) == 'SUCCESSWITHWARNING')
 		{
 			/* Take the response variables and put them into the local class variables */
-			foreach($this->ResponseFieldsArray['DoReferenceTransaction'] as $key => $value)
-				$this->$key = $this->Response[$value];
+			foreach($this->ResponseFieldsArray[$this->_responseReference] as $key => $value)
+				if(array_key_exists($value, $this->Response)){
+					$this->$key = $this->Response[$value];
+				}
 			
 			return true;
 		}
 	}
 
 }  // END CLASS
-
