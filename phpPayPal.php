@@ -173,6 +173,9 @@ class phpPayPal {
 	public $subscription_date; // SUBSCRIPTIONDATE
 	public $effective_date; // EFFECTIVEDATE
 	public $retry_time; // RETRYTIME
+	public $next_billing_date; //NEXTBILLINGDATE
+	public $failed_payment_count; //FAILEDPAYMENTCOUNT
+	public $last_payment_date; // LASTPAYMENTDATE
 	public $user_name; // USERNAME
 	public $password; // PASSWORD
 	public $recurrences; // RECURRENCES
@@ -183,6 +186,7 @@ class phpPayPal {
 	public $closing_date; // CLOSINGDATE
 	public $multi_item; // MULTIITEM
 	public $refund_type; // REFUNDTYPE
+	public $landing_page; //LANDINGPAGE
 	// Other
 
 	public $build;
@@ -423,7 +427,8 @@ class phpPayPal {
 				'channel_type' 				=> array('name' => 'CHANNELTYPE', 'required' => 'no'),
             'solution_type' => array('name' => 'SOLUTIONTYPE', 'required' => 'no'),
 				'billing_type' 				=> array('name' => 'L_BILLINGTYPE0', 'required' => 'no'),
-            'billing_agreement' => array('name' => 'L_BILLINGAGREEMENTDESCRIPTION0', 'required' => 'no')
+            'billing_agreement' => array('name' => 'L_BILLINGAGREEMENTDESCRIPTION0', 'required' => 'no'),
+			'landing_page' 				=> array('name' => 'LANDINGPAGE', 'required' => 'no'),
         ),
 		'GetExpressCheckoutDetails' => array(
 				'token' 					=> array('name' => 'TOKEN',					'required' => 'yes')
@@ -461,7 +466,7 @@ class phpPayPal {
 				'note' 						=> array('name' => 'NOTE',					'required' => 'no'),
 				),
 		'CreateRecurringPaymentsProfile' => array(
-				'token' 					=> array('name' => 'TOKEN',					'required' => 'no'),
+				'token' 					=> array('name' => 'TOKEN',					'required' => 'yes'),
 				'payer_id' 					=> array('name' => 'PAYERID',				'required' => 'no'),
 				'email' 				 	=> array('name' => 'EMAIL',					'required' => 'no'),
 				'country_code'    			=> array('name' => 'COUNTRYCODE',			'required' => 'no'),
@@ -469,11 +474,11 @@ class phpPayPal {
 				'payer_status'				=> array('name' => 'PAYERSTATUS',			'required' => 'no'),
 				'subscriber_name' 			=> array('name' => 'SUBSCRIBERNAME',		'required' => 'no'),
 				'profile_reference'			=> array('name' => 'PROFILEREFERENCE',		'required' => 'no'),
-            'credit_card_type' => array('name' => 'CREDITCARDTYPE', 'required' => 'yes'),
-            'credit_card_number' => array('name' => 'ACCT', 'required' => 'yes'),
-            'expire_date' => array('name' => 'EXPDATE', 'required' => 'yes'),
-            'first_name' => array('name' => 'FIRSTNAME', 'required' => 'yes'),
-            'last_name' => array('name' => 'LASTNAME', 'required' => 'yes'),
+            'credit_card_type' => array('name' => 'CREDITCARDTYPE', 'required' => 'no'),
+            'credit_card_number' => array('name' => 'ACCT', 'required' => 'no'),
+            'expire_date' => array('name' => 'EXPDATE', 'required' => 'no'),
+            'first_name' => array('name' => 'FIRSTNAME', 'required' => 'no'),
+            'last_name' => array('name' => 'LASTNAME', 'required' => 'no'),
             'address1' => array('name' => 'STREET', 'required' => 'no'),
             'address2' => array('name' => 'STREET2', 'required' => 'no'),
             'city' => array('name' => 'CITY', 'required' => 'no'),
@@ -802,11 +807,12 @@ class phpPayPal {
 				'max_failed_payments' 	=> 'MAXFAILEDPAYMENTS',
 				'subcriber_name' 		=> 'SUBSCRIBERNAME',
 				'profile_start_date' 	=> 'PROFILESTARTDATE',
-				'nest_billing_date' 	=> 'NEXTBILLINGDATE',
+				'next_billing_date' 	=> 'NEXTBILLINGDATE',
 				'num_cycles_completed' 	=> 'NUMCYCLESCOMPLETED',
 				'num_cycles_remaining' 	=> 'NUMCYCLESREMAINING',
 				'outstanding_balance' 	=> 'OUTSTANDINGBALANCE',
-				'failed_billing_account' => 'FAILEDPAYMENTCOUNT',
+				'failed_payment_count' => 'FAILEDPAYMENTCOUNT',
+				'last_payment_date'		=> 'LASTPAYMENTDATE',
 				'trial_amount_paid' 	=> 'TRIALAMTPAID',
 				'regular_amount_paid' 	=> 'REGULARAMTPAID',
 				'aggregate_amount'		=> 'AGGREGATEAMT',
