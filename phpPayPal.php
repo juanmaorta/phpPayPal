@@ -1172,7 +1172,7 @@ class phpPayPal {
 			If an error occured, show the resulting errors
 			*/
 		$this->Response = $this->hash_call("DoExpressCheckoutPayment", $nvpstr);
-		var_dump($this->Response); die();
+		// var_dump($this->Response); die();
 		// decode the variables incase we still require access to them in our program
 		$this->urldecodeVariables();
 		
@@ -1428,13 +1428,15 @@ class phpPayPal {
 
 	/* This function will add an item to the itemArray for use in doDirectPayment and doExpressCheckoutPayment */
 
-	public function add_item($name, $number, $quantity, $amount_tax, $amount) {
+	public function add_item($name, $number, $quantity, $amount_tax, $amount, $quantity = 1) {
 		$new_item =  array(
 			'name' => $name,
 			'number' => $number,
 			'quantity' => $quantity,
 			'amount_tax' => $amount_tax,
-				'amount' => $amount);
+			'amount' => $amount,
+			'quantity' => $quantity
+		);
 
 		$this->ItemsArray[] = $new_item;
 
@@ -1664,3 +1666,4 @@ class phpPayPal {
 		}
 	}
 
+}
