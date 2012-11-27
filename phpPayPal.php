@@ -34,7 +34,7 @@ class phpPayPal {
 	public $PROXY_PORT		= null;
 	public $return_url		= null;
 	public $cancel_url		= null;
-	public $VERSION			= '53.0';
+	public $VERSION			= '54.0';
 	// ----------------------------
 	// PUBLIC VARIABLES
 	// ----------------------------
@@ -794,7 +794,8 @@ class phpPayPal {
 				),
 		'CreateRecurringPaymentsProfile' => array(
 				'profile_id' 			=> 'PROFILEID',
-				'status'				=> 'STATUS'
+				'status'				=> 'STATUS',
+				'profile_status'		=> 'PROFILESTATUS'
 				),
 		'UpdateRecurringPaymentsProfile' => array(
 				'profile_id' 			=> 'PROFILEID',
